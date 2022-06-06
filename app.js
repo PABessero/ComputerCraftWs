@@ -7,7 +7,18 @@ var logger = require('morgan');
 var indexRouter = require('./routes/index');
 var usersRouter = require('./routes/users');
 
+var ws = require('ws')
+
+const wss = new ws.WebSocketServer({port: 3001})
+
+wss.on('connection', function connection(ws) {
+  ws.on('message', function message(data){
+    console.log('received: %s', data)
+  })
+})
+
 var app = express();
+
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
